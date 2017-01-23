@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+</head>
+
+<body style="background-color: lightyellow;">
+
+<div style="width: 512px; height: 512px; position: absolute; top: 0; left: 0; display: block">
+
+
+    <img src="https://pbs.twimg.com/profile_images/685471520752332800/asQkyqY9.png" height="512" width="512"/>
+    <div id="slider" style="display: block; position: absolute; width: 6px; height: 100%; top: 0; left: 50%; cursor: pointer; border: 1px solid red; background-color: black">
+
+    </div>
+    <div id="in" style="position: absolute; top: 0; left: 0; overflow: hidden; display: block; width: 50%;">
+        <img src="https://lh3.googleusercontent.com/M4w50LUpcbjujxNypwndCZWIEwEqKZXk_RDZOoVPlKY1buCWq_ZCOGfrHlhmrKCB-KAx" height="512" width="512"/>
+    </div>
+
+</div>
+
+<script>
+    var slider = document.getElementById('slider');
+    var image = document.getElementById('in');
+
+    document.onmousedown = function (e) {
+      var target = e.target;
+      //перевірка чи елемент на якому відбулася подія є слайдером
+      if (target.id !== 'slider') {return;}
+
+
+      document.onmousemove = function (e) {
+
+        // позиціонування слайдера( щоб не вилазив за межі картинки )
+        if (e.pageX > 512-slider.offsetWidth){
+          slider.style.left = 100 - 100*slider.offsetWidth/512 + '%';
+          image.style.width = 100 - 100*slider.offsetWidth/512 + '%';
+        } else if (e.pageX < 0) {
+          slider.style.left = 100*e.pageX/512 + '%';
+          image.style.width = 100*e.pageX/512 + '%';
+        }else {
+          slider.style.left = 100 * e.pageX / 512 + '%';
+          image.style.width = 100 * e.pageX / 512 + '%';
+        }
+      };
+      document.onmouseup = function () {
+        // завершення переміщення слайдера
+        document.onmousemove = document.onmouseup = null;
+      };
+      // щоб не виділявся текст коли зажата ліва кнопка мишки
+      return false;
+    };
+    // відміна дефолтної поведінки браузера при перетягуванні елементів
+    document.ondragstart = function() {
+      return false;
+    };
+</script>
+
+</body>
+
+</html>
